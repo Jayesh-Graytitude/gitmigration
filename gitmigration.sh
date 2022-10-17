@@ -33,6 +33,14 @@ echo $NewRepoUrl
 echo "Enter USS path to clone the newly created repo"
 read -p "USS Path: " usspath
 echo $usspath
+#
+if [ -d $usspath ]; then
+    echo "directory present"
+else
+    echo 'Error: $usspath not found. Can not continue.'
+  exit
+fi
+#
 cd $usspath
 pwd
 git clone $NewRepoUrl
