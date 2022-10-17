@@ -89,5 +89,6 @@ git clone $NewRepoUrl
 #
 cd "${ussgitpath}/temptest"
 sh migrate.sh
+echo "** Migration completed....please verify"
 exit
 
