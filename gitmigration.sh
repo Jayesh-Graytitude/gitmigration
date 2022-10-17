@@ -9,36 +9,36 @@
 #      3. Absolute path for migration.txt file              #
 #############################################################
 #
-echo "Enter USS path to clone the newly created application Git repo"
+echo "** Enter USS path to clone the newly created application Git repo"
 read -p "USS Path for Git repository: " ussgitpath
 echo $ussgitpath
 #
 if [ -d $ussgitpath ]; then
-    echo "USS path for clonning new Git repository is present...continuing"
+    echo "** USS path for clonning new Git repository is present...continuing"
 else
-    echo "Error: $ussgitpath not found. Please start again with a valid path to clone"
+    echo "** Error: $ussgitpath not found. Please start again with a valid path to clone"
   exit 1
 fi
 #
-echo "Enter USS path for migrate.sh utility"
+echo "** Enter USS path for migrate.sh utility"
 read -p "USS Path for migration utility: " ussmigrutl
 echo $ussmigrutl
 #
 if [ -f $ussmigrutl ]; then
-    echo "Migration utility is present...continuing"
+    echo "** Migration utility is present...continuing"
 else
-    echo "Error: $ussmigrutl not found. Please start again with a valid path for migration utility"
+    echo "** Error: $ussmigrutl not found. Please start again with a valid path for migration utility"
   exit 1
 fi
 #
-echo "Enter absolute path for migrate mapping file"
+echo "** Enter absolute path for migrate mapping file"
 read -p "USS Path for mapping file: " ussmapfil
 echo $ussmapfil
 #
 if [ -f $ussmapfil ]; then
-    echo "Mapping file is present...continuing"
+    echo "** Mapping file is present...continuing"
 else
-    echo "Error: $ussmapfil not found. Please start again with a valid path for mapping file for migration"
+    echo "**Error: $ussmapfil not found. Please start again with a valid path for mapping file for migration"
   exit 1
 fi
 #
@@ -52,27 +52,24 @@ fi
 #      3. Github Personal Access Token (Github Token)       #
 #############################################################
 #
-echo "Enter details to create new Git repository"
+echo "** Enter details to create new Git repository"
 read -p "Reponame: " reponame
 read -sp "Github User: " user
 read -sp "Github Token: " token
 #
-echo $reponame
 FullRepoUrl="https://github.com/${user}/${reponame}"
 tempreponame=(${FullRepoUrl//.git/ })
-echo $tempreponame
 GitResponce=$(curl -s -o /dev/null -I -w "%{http_code}" $tempreponame)
-echo $GitResponce
 #
 if [ $GitResponce == '200' ]; then
-    echo "Git repository already exists....Choose a new name or delete manually and run the script again"
+    echo "** Git repository ${$tempreponame} already exists....Choose a new name or delete manually and run the script again"
 	exit 1
 else
-    echo "Git repo name is available to create as a new one"
+    echo "** Git repo name is available to create as a new one"
 	NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 			'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
 			| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
-	echo $NewRepoUrl
+	echo "** New Git repository ${NewRepoUrl} created successfully"
 fi
 #
 #############################################################
@@ -88,10 +85,9 @@ git clone $NewRepoUrl
 #
 #############################################################
 # This step triggers migration process for the application. #
-# User Input:                                               #
-#      1. USS path for migrate.sh utility                   #
-#      2. USS path for migration file                       #
 #############################################################
 #
+cd "${$ussgitpath}/temptest"
+sh migrate.sh
 exit
 
