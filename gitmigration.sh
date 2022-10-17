@@ -1,6 +1,48 @@
 #!/bin/bash
 #
 #############################################################
+# This step accepts and validates inputs for required       #
+# USS directories and files.                                #
+# User Input:                                               #
+#      1. USS path to clone the newly created empty repo    #
+#      2. Path to migrate.sh utility                        #
+#      3. Absolute path for migration.txt file              #
+#############################################################
+#
+echo "Enter USS path to clone the newly created application Git repo"
+read -p "USS Path for Git repository: " ussgitpath
+echo $ussgitpath
+#
+if [ -d $ussgitpath ]; then
+    echo "USS path for clonning new Git repository is present...continuing"
+else
+    echo "Error: $ussgitpath not found. Please start again with a valid path to clone"
+  exit
+fi
+#
+echo "Enter USS path for migrate.sh utility"
+read -p "USS Path for migration utility: " ussmigrutl
+echo $ussmigrutl
+#
+if [ -d $ussmigrutl ]; then
+    echo "Migration utility is present...continuing"
+else
+    echo "Error: $ussmigrutl not found. Please start again with a valid path for migration utility"
+  exit
+fi
+#
+echo "Enter absolute path for migrate mapping file"
+read -p "USS Path for mapping file: " ussmapfil
+echo $ussmapfil
+#
+if [ -d $ussmapfil ]; then
+    echo "Mapping file is present...continuing"
+else
+    echo "Error: $ussmapfil not found. Please start again with a valid path for mapping file for migration"
+  exit
+fi
+#
+#############################################################
 # This step accepts below input from the user and creates a #
 # new GItHUb repository for application migration from      #
 # Mainframe.                                                #
@@ -30,18 +72,7 @@ echo $NewRepoUrl
 #      1. USS path to clone the newly created empty repo    #
 #############################################################
 #
-echo "Enter USS path to clone the newly created repo"
-read -p "USS Path: " usspath
-echo $usspath
-#
-if [ -d $usspath ]; then
-    echo "directory present"
-else
-    echo 'Error: $usspath not found. Can not continue.'
-  exit
-fi
-#
-cd $usspath
+cd $ussgitpath
 pwd
 git clone $NewRepoUrl
 #
