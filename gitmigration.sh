@@ -24,7 +24,7 @@ echo "Enter USS path for migrate.sh utility"
 read -p "USS Path for migration utility: " ussmigrutl
 echo $ussmigrutl
 #
-if [ -d $ussmigrutl ]; then
+if [ -f $ussmigrutl ]; then
     echo "Migration utility is present...continuing"
 else
     echo "Error: $ussmigrutl not found. Please start again with a valid path for migration utility"
@@ -35,7 +35,7 @@ echo "Enter absolute path for migrate mapping file"
 read -p "USS Path for mapping file: " ussmapfil
 echo $ussmapfil
 #
-if [ -d $ussmapfil ]; then
+if [ -f $ussmapfil ]; then
     echo "Mapping file is present...continuing"
 else
     echo "Error: $ussmapfil not found. Please start again with a valid path for mapping file for migration"
