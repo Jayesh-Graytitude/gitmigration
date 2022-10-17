@@ -17,7 +17,7 @@ if [ -d $ussgitpath ]; then
     echo "USS path for clonning new Git repository is present...continuing"
 else
     echo "Error: $ussgitpath not found. Please start again with a valid path to clone"
-  exit
+  exit 1
 fi
 #
 echo "Enter USS path for migrate.sh utility"
@@ -28,7 +28,7 @@ if [ -f $ussmigrutl ]; then
     echo "Migration utility is present...continuing"
 else
     echo "Error: $ussmigrutl not found. Please start again with a valid path for migration utility"
-  exit
+  exit 1
 fi
 #
 echo "Enter absolute path for migrate mapping file"
@@ -39,7 +39,7 @@ if [ -f $ussmapfil ]; then
     echo "Mapping file is present...continuing"
 else
     echo "Error: $ussmapfil not found. Please start again with a valid path for mapping file for migration"
-  exit
+  exit 1
 fi
 #
 #############################################################
@@ -58,6 +58,11 @@ read -sp "Github User: " user
 read -sp "Github Token: " token
 #
 echo $reponame
+fullrepo="https://github.com/${user}/${reponame}"
+newvar=(${fullrepo//.git/ })
+echo $newvar
+temp=$(curl -s -o /dev/null -I -w "%{http_code}" $newvar)
+echo $temp
 #
 NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 	'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
