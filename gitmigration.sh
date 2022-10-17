@@ -17,11 +17,11 @@ read -sp "Github Token: " token
 #
 echo $reponame
 #
-temp=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
+NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 	'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
        | grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
 #
-echo $temp
+echo $NewRepoUrl
 #
 #############################################################
 # Below step clones the newly created GitHub repo to local  #
@@ -33,5 +33,16 @@ echo $temp
 echo "Enter USS path to clone the newly created repo"
 read -p "USS Path: " usspath
 echo $usspath
+cd $usspath
+pwd
+git clone $NewRepoUrl
+#
+#############################################################
+# This step triggers migration process for the application. #
+# User Input:                                               #
+#      1. USS path for migrate.sh utility                   #
+#      2. USS path for migration file                       #
+#############################################################
+#
 exit
 
