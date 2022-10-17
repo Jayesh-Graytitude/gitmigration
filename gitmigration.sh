@@ -87,7 +87,7 @@ git clone $NewRepoUrl
 # This step triggers migration process for the application. #
 #############################################################
 #
-cd "${$ussgitpath}/temptest"
+cd "${ussgitpath}/temptest"
 sh migrate.sh
 exit
 
