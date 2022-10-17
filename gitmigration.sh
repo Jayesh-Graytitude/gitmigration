@@ -58,17 +58,22 @@ read -sp "Github User: " user
 read -sp "Github Token: " token
 #
 echo $reponame
-fullrepo="https://github.com/${user}/${reponame}"
-newvar=(${fullrepo//.git/ })
-echo $newvar
-temp=$(curl -s -o /dev/null -I -w "%{http_code}" $newvar)
-echo $temp
+FullRepoUrl="https://github.com/${user}/${reponame}"
+tempreponame=(${FullRepoUrl//.git/ })
+echo $tempreponame
+GitResponce=$(curl -s -o /dev/null -I -w "%{http_code}" $tempreponame)
+echo $GitResponce
 #
-NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
-	'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
-       | grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
-#
-echo $NewRepoUrl
+if [ $GitResponce == '200' ]; then
+    echo "Git repository already exists....Choose a new name or delete manually and run the script again"
+	exit 1
+else
+    echo "Git repo name is available to create as a new one"
+	NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
+			'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
+			| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
+	echo $NewRepoUrl
+fi
 #
 #############################################################
 # Below step clones the newly created GitHub repo to local  #
