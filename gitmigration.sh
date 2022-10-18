@@ -75,6 +75,7 @@ echo ''
 read -sp "Github Token: " token
 echo ''
 #
+echo ''
 echo "** Validating new git repository name"
 echo ''
 #
@@ -87,6 +88,7 @@ if [ $GitResponce == '200' ]; then
 	exit 1
 else
     echo "** Git repo name is available to create as a new one"
+	echo ''
 	NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 			'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
 			| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
@@ -105,12 +107,14 @@ fi
 cd $ussgitpath
 #
 if [ -d $reponame ]; then
+	echo ''
     echo "** Local directory already present...deleting it before clonning a newone"
 	echo ''
 	rm -rf $reponame
 fi
 #
 echo "** Clonning new git repository to USS"
+echo ''
 #
 git clone $NewRepoUrl
 #
