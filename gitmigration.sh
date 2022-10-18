@@ -12,8 +12,11 @@
 echo "*******************************************************************"
 echo "*  Enter USS path to clone the newly created application Git repo *"
 echo "*******************************************************************"
+echo ''
+#
 read -p "USS Path for Git repository: " ussgitpath
-echo $ussgitpath
+#
+echo ''
 #
 if [ -d $ussgitpath ]; then
     echo "** USS path for clonning new Git repository is present...continuing"
@@ -22,7 +25,10 @@ else
   exit 1
 fi
 #
-echo "** Enter USS path for migrate.sh utility"
+echo "*******************************************************************"
+echo "*  Enter USS path for migrate.sh utility                          *"
+echo "*******************************************************************"
+echo ''
 read -p "USS Path for migration utility: " ussmigrutl
 echo $ussmigrutl
 #
