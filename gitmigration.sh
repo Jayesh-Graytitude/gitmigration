@@ -57,12 +57,13 @@ read -p "Reponame: " reponame
 read -sp "Github User: " user
 read -sp "Github Token: " token
 #
+echo "** Validating new git repository name"
 FullRepoUrl="https://github.com/${user}/${reponame}"
 #tempreponame=(${FullRepoUrl//.git/ })
 GitResponce=$(curl -s -o /dev/null -I -w "%{http_code}" $FullRepoUrl)
 #
 if [ $GitResponce == '200' ]; then
-    echo "** Git repository ${FullRepoUrl} already exists....Choose a new name or delete manually and run the script again"
+    echo "** Git repository ${FullRepoUrl}.git already exists....Choose a new name or delete manually and run the script again"
 	exit 1
 else
     echo "** Git repo name is available to create as a new one"
