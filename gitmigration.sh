@@ -25,12 +25,12 @@ else
   exit 1
 fi
 #
+echo ''
 echo "*******************************************************************"
 echo "*  Enter USS path for migrate.sh utility                          *"
 echo "*******************************************************************"
 echo ''
 read -p "USS Path for migration utility: " ussmigrutl
-echo $ussmigrutl
 #
 if [ -f $ussmigrutl ]; then
     echo "** Migration utility is present...continuing"
@@ -39,9 +39,12 @@ else
   exit 1
 fi
 #
-echo "** Enter absolute path for migrate mapping file"
+echo ''
+echo "*******************************************************************"
+echo "*  Enter absolute path for migrate mapping file                   *"
+echo "*******************************************************************"
+echo ''
 read -p "USS Path for mapping file: " ussmapfil
-echo $ussmapfil
 #
 if [ -f $ussmapfil ]; then
     echo "** Mapping file is present...continuing"
@@ -60,14 +63,23 @@ fi
 #      3. Github Personal Access Token (Github Token)       #
 #############################################################
 #
-echo "** Enter details to create new Git repository"
+echo ''
+echo "*******************************************************************"
+echo "*  Enter details to create new Git repository                     *"
+echo "*******************************************************************"
+echo ''
 read -p "Reponame: " reponame
+echo ''
 read -sp "Github User: " user
+echo ''
 read -sp "Github Token: " token
+echo ''
 #
 echo "** Validating new git repository name"
+echo ''
+#
 FullRepoUrl="https://github.com/${user}/${reponame}"
-#tempreponame=(${FullRepoUrl//.git/ })
+#
 GitResponce=$(curl -s -o /dev/null -I -w "%{http_code}" $FullRepoUrl)
 #
 if [ $GitResponce == '200' ]; then
@@ -78,7 +90,9 @@ else
 	NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 			'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
 			| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
+	echo ''
 	echo "** New Git repository ${NewRepoUrl} created successfully"
+	echo ''
 fi
 #
 #############################################################
@@ -89,11 +103,10 @@ fi
 #############################################################
 #
 cd $ussgitpath
-pwd
-ls
 #
 if [ -d $reponame ]; then
     echo "** Local directory already present...deleting it before clonning a newone"
+	echo ''
 	rm -rf $reponame
 fi
 #
@@ -107,6 +120,8 @@ git clone $NewRepoUrl
 #
 cd "${ussgitpath}/temptest"
 sh migrate.sh
+echo ''
 echo "** Migration completed....please verify"
+echo ''
 exit
 
