@@ -9,7 +9,9 @@
 #      3. Absolute path for migration.txt file              #
 #############################################################
 #
-echo "** Enter USS path to clone the newly created application Git repo"
+echo "*******************************************************************"
+echo "*  Enter USS path to clone the newly created application Git repo *"
+echo "*******************************************************************"
 read -p "USS Path for Git repository: " ussgitpath
 echo $ussgitpath
 #
