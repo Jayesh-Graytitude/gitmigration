@@ -123,6 +123,7 @@ git clone $NewRepoUrl
 #############################################################
 #
 cd "${ussgitpath}/temptest"
+echo ''
 sh migrate.sh
 echo ''
 echo "** Migration completed....please verify"
