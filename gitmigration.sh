@@ -2,7 +2,7 @@
 #
 #############################################################
 # This step accepts and validates inputs for required       #
-# USS directories and files.                                #
+# USS directories and files                                 #
 # User Input:                                               #
 #      1. USS path to clone the newly created empty repo    #
 #      2. Path to migrate.sh utility                        #
