@@ -82,6 +82,15 @@ fi
 #
 cd $ussgitpath
 pwd
+ls
+#
+if [ -d $reponame ]; then
+    echo "** Local directory already present...deleting it before clonning a newone"
+	rm -rf $reponame
+fi
+#
+echo "** Clonning new git repository to USS"
+#
 git clone $NewRepoUrl
 #
 #############################################################
