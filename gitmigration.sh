@@ -89,13 +89,20 @@ if [ $GitResponce == '200' ]; then
 else
     echo "** Git repo name is available to create as a new one"
 	echo ''
-	NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
-			'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
-			| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
-	echo ''
+fi
+#
+NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
+		'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
+		| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
+#
+if [ -Z "$NewRepoUrl" ]; then
+	echo "** Git repository is not created...verify the logs and rectify the issue"
+	exit 1
+else
+    echo ''
 	echo "** New Git repository ${NewRepoUrl} created successfully"
 	echo ''
-fi
+fi	
 #
 #############################################################
 # Below step clones the newly created GitHub repo to local  #
@@ -122,11 +129,11 @@ git clone $NewRepoUrl
 # This step triggers migration process for the application. #
 #############################################################
 #
-cd "${ussgitpath}/temptest"
-echo ''
-sh migrate.sh
-echo ''
-echo "** Migration completed....please verify"
-echo ''
-exit
+#cd "${ussmigrutl}"
+#echo ''
+#sh migrate.sh
+#echo ''
+#echo "** Migration completed....please verify"
+#echo ''
+#exit
 
