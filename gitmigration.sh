@@ -98,7 +98,7 @@ NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 NewRepoUrl=''
 echo "*** NewRepoUrl - ${NewRepoUrl}"
 #
-if [ -Z "$NewRepoUrl" ]; then
+if [ -z "$NewRepoUrl" ]; then
 	echo "** Git repository is not created...verify the logs and rectify the issue"
 	exit 1
 else
