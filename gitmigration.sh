@@ -132,8 +132,8 @@ git clone $NewRepoUrl
 #cd "${ussmigrutl}"
 #echo ''
 #sh migrate.sh
-#echo ''
-#echo "** Migration completed....please verify"
-#echo ''
-#exit
+echo ''
+echo "** Migration completed....please verify"
+echo ''
+exit
 
