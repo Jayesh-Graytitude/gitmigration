@@ -95,11 +95,10 @@ NewRepoUrl=$(curl -X POST -u $user:$token https://api.github.com/user/repos -d \
 		'{"name": "'$reponame'","description":"Creating new repository '$reponame'","auto_init":"true","public":"true"}' \
 		| grep -m 1 clone | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*")
 #
-NewRepoUrl=''
-echo "*** NewRepoUrl - ${NewRepoUrl}"
-#
 if [ -z "$NewRepoUrl" ]; then
+	echo ''
 	echo "** Git repository is not created...verify the logs and rectify the issue"
+	echo ''	
 	exit 1
 else
     echo ''
